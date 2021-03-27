@@ -23,6 +23,8 @@ import javax.swing.UIManager;
 	 Color random_color;
 	 Color[] color_array= {Color.decode("#FFAEBC"),Color.decode("#A0E7E5"),Color.decode("#B4F8C8"),Color.decode("#FBE7C6"),Color.decode("#0E86D4"),Color.decode("#F56B39"),Color.decode("#E21B32")};
 	 int score=0;
+	 boolean game_over=false;
+	 int arrow=0;
 	 
 	 int[][][] shape= {
 		
@@ -90,7 +92,20 @@ import javax.swing.UIManager;
 			g.drawString("Pause", 105, 295);
 		}
 		
-		if(!is_paused)
+		if(game_over)
+		{
+			g.setFont(new Font("TimesRoman", Font.BOLD, 40));
+			g.drawString("Game Over", 55, 265);
+			g.setFont(new Font("TimesRoman", Font.BOLD, 25));
+			g.drawString("(Want To Continue ?)", 40, 310);
+			g.setFont(new Font("TimesRoman", Font.BOLD, 27));
+			g.drawString("Yes", 130, 360);
+			g.drawString(">        <", 108, 360+(arrow*28));
+			g.drawString("No", 134, 388);
+			
+		}
+		
+		if(!is_paused && !game_over)
 	    t.start();
 	}
 	public void actionPerformed(ActionEvent e){ 
@@ -137,12 +152,13 @@ import javax.swing.UIManager;
 		{
 			t.stop();
 			if((y/26-arr.length)<=1)
-			System.out.println("Gameover");
+			game_over=true;
+			
 			mark_down();
 			clear_row();
+			if(!game_over)
 			draw_new_piece();
 		}
-		
 		repaint();
 	}
 	
@@ -279,17 +295,17 @@ import javax.swing.UIManager;
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		int code=e.getKeyCode();
-		if(code == KeyEvent.VK_RIGHT && !is_paused)
+		if(code == KeyEvent.VK_RIGHT && !is_paused && !game_over)
 			right();
-		if(code == KeyEvent.VK_DOWN && !is_paused)
+		if(code == KeyEvent.VK_DOWN && !is_paused && !game_over) 
 			{score+=1;down();}
-		if(code == KeyEvent.VK_UP && !is_paused)
+		if(code == KeyEvent.VK_UP && !is_paused&& !game_over)
 			rotate();
-		if(code == KeyEvent.VK_LEFT && !is_paused)
+		if(code == KeyEvent.VK_LEFT && !is_paused && !game_over)
 			left();
-		if(code == KeyEvent.VK_SPACE && !is_paused)
+		if(code == KeyEvent.VK_SPACE && !is_paused && !game_over)
 			{score+=20;dropdown();}
-		if(code == KeyEvent.VK_P)
+		if(code == KeyEvent.VK_P && !game_over)
 		{
 			if(is_paused)
 				t.start();
@@ -297,6 +313,18 @@ import javax.swing.UIManager;
 				t.stop();
 			repaint();
 			is_paused=!is_paused;
+		}
+		if(code == KeyEvent.VK_DOWN && game_over)
+			{arrow=(arrow+1)%2;repaint();}
+		if(code == KeyEvent.VK_UP && game_over)
+			{arrow=(arrow-1);if(arrow<0)arrow=1;repaint();}
+		if(code == KeyEvent.VK_ENTER && game_over)
+		{
+			if(arrow==1)
+				System.exit(0);
+				init();
+				game_over=false;
+				repaint();
 		}
 	}
 	@Override
@@ -315,7 +343,7 @@ public class Tetris {
 		JFrame f = new JFrame("Tetris");
 		f.add(s);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setBounds(100, 12, 12*26-12, 26*23+8);
+		f.setBounds(470, 65, 12*26-12, 26*23+8);
 		f.getContentPane().setLayout(null);f.setVisible(true);
 	}
 
