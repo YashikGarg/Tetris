@@ -164,17 +164,9 @@ class controller extends JPanel implements KeyListener
 }
 
 public class main_page {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		try {
-            // select Look and Feel
-            UIManager.setLookAndFeel("com.jtattoo.plaf.luna.LunaLookAndFeel");
-            // start application
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+	
+	public static void open_frame()
+	{
 		JFrame f = new JFrame("Tetris");
 		controller s=new controller();
 		
@@ -195,7 +187,19 @@ public class main_page {
 		
 		f.getContentPane().setLayout(null);
 		f.setVisible(true);
+	}
 
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try {
+            // select Look and Feel
+            UIManager.setLookAndFeel("com.jtattoo.plaf.luna.LunaLookAndFeel");
+            // start application
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+		
 	}
 
 }

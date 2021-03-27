@@ -359,7 +359,8 @@ public class Tetris {
             ex.printStackTrace();
         }
 		
-		framy();
+		main_page s=new main_page();
+		s.open_frame();
 	}
 
 }
