@@ -57,7 +57,7 @@ ____
 
 * ↑ &nbsp; To Rotate Piece
 
-* ↓ &nbsp; To Move Down Piece
+* ↓ &nbsp; To Soft Drop Piece
 
 * → &nbsp;To Move Piece Right
 
