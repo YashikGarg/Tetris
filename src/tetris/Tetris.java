@@ -285,6 +285,8 @@ import javax.swing.UIManager;
 		for(int i=y/26;i<23 && !check_strike(arr);i++,y+=26);
 		mark_down();
 		clear_row();
+		if((y/26-arr.length)<=1)
+			game_over=true;
 		draw_new_piece();
 		repaint();
 		
